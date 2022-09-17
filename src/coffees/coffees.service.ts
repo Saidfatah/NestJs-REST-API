@@ -45,7 +45,6 @@ export class CoffesService {
     const existingCoffee = this.findOne(id);
     if (existingCoffee) {
       const index = this.coffees.indexOf(existingCoffee);
-      console.log({ index });
       this.coffees[index] = { ...updateCoffeeDto };
     }
   }
@@ -53,7 +52,6 @@ export class CoffesService {
     const existingCoffee = this.findOne(id);
     if (existingCoffee) {
       const index = this.coffees.indexOf(existingCoffee);
-      console.log({ index });
       this.coffees[index] = { ...this.coffees[index], ...updateCoffeeDto };
     }
   }

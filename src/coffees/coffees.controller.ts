@@ -10,6 +10,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { CoffesService } from './coffees.service';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdatePatchCoffeeDto } from './dto/update-patch-coffee.dto';
 
 @Controller('coffes')
 export class CoffesController {
@@ -30,16 +32,19 @@ export class CoffesController {
   }
 
   @Post()
-  create(@Body() body) {
-    const { brand, name, flavors } = body;
+  create(@Body() createCoffeDto: CreateCoffeeDto) {
+    const { brand, name, flavors } = createCoffeDto;
     return this.coffseService.create({ brand, name, flavors });
   }
 
   //PATCH is a method of modifying resources where the client
   //sends partial data that is to be updated without modifying the entire data.
   @Patch(':id')
-  updateFlavor(@Param('id') id: string, @Body() body) {
-    this.coffseService.updateField(id, body);
+  updateFlavor(
+    @Param('id') id: string,
+    @Body() updateCoffePatchDto: UpdatePatchCoffeeDto,
+  ) {
+    this.coffseService.updateField(id, updateCoffePatchDto);
     return 'this partially updates the resource: ' + id;
   }
 

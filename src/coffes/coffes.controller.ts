@@ -7,13 +7,20 @@ import {
   Patch,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 
 @Controller('coffes')
 export class CoffesController {
   @Get()
-  findAll() {
-    return ['espresso', 'latte'];
+  findAll(@Query() paginationQuery) {
+    const { limit, offset } = paginationQuery;
+    return (
+      'this send reosurces from ' +
+      offset +
+      ' to ' +
+      (parseInt(offset) + parseInt(limit))
+    );
   }
   @Get('flavors')
   findAllFlavors() {

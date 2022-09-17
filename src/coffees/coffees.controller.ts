@@ -9,41 +9,37 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { CoffesService } from './coffees.service';
 
 @Controller('coffes')
 export class CoffesController {
+  constructor(private readonly coffseService: CoffesService) {}
+
   @Get()
-  findAll(@Query() paginationQuery) {
-    const { limit, offset } = paginationQuery;
-    return (
-      'this send reosurces from ' +
-      offset +
-      ' to ' +
-      (parseInt(offset) + parseInt(limit))
-    );
+  findAll() {
+    return this.coffseService.findAll();
   }
   @Get('flavors')
   findAllFlavors() {
-    return ['choclate', 'vannila'];
+    return this.coffseService.findAllFlavors();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return 'id' + id;
+    return this.coffseService.findOne(id);
   }
 
   @Post()
-  brew(@Body('type') type: string) {
-    console.log(type);
-    return type;
+  create(@Body() body) {
+    const { brand, name, flavors } = body;
+    return this.coffseService.create({ brand, name, flavors });
   }
 
   //PATCH is a method of modifying resources where the client
   //sends partial data that is to be updated without modifying the entire data.
   @Patch(':id')
   updateFlavor(@Param('id') id: string, @Body() body) {
-    console.log({ id });
-    console.log(body);
+    this.coffseService.updateField(id, body);
     return 'this partially updates the resource: ' + id;
   }
 
@@ -54,11 +50,13 @@ export class CoffesController {
   //replaces the entire resource if it exists or creates new if it does not exist.
   @Put(':id')
   updateFlavorPut(@Param('id') id: string, @Body() body) {
+    this.coffseService.update(id, body);
     return 'this updates the whole resource at :' + id;
   }
 
   @Delete(':id')
   delete(@Param('id') id: string) {
+    this.coffseService.remove(id);
     return 'this deletes resource :' + id;
   }
 }

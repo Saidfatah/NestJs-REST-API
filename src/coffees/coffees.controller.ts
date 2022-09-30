@@ -33,8 +33,8 @@ export class CoffesController {
 
   @Post()
   create(@Body() createCoffeDto: CreateCoffeeDto) {
-    const { brand, name, flavors } = createCoffeDto;
-    return this.coffseService.create({ brand, name, flavors });
+    const { brand, name, flavors, id } = createCoffeDto;
+    return this.coffseService.create({ brand, name, flavors, id });
   }
 
   //PATCH is a method of modifying resources where the client

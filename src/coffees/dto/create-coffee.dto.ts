@@ -1,11 +1,14 @@
-import { IsString } from 'class-validator';
+import { IsArray, IsString } from 'class-validator';
 export class CreateCoffeeDto {
+  @IsString()
+  readonly id: number;
+
   @IsString()
   readonly brand: string;
 
-  @IsString()
+  @IsString({ each: true })
   readonly flavors: string[];
 
-  @IsString({ each: true })
+  @IsString()
   readonly name: string;
 }

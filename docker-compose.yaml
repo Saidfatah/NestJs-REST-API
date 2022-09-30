@@ -1,0 +1,11 @@
+version: "3"
+services:
+  db:
+    container_name: postgres
+    image: sameersbn/postgresql:12-20200524
+    ports:
+    - "5432:8686"
+    env_file:
+    - docker.env
+    volumes:
+    - ./data/pgsql:/var/lib/postgresql/data
